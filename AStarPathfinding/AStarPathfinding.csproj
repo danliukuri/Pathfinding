@@ -40,6 +40,7 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="AStar.cs" />
         <Compile Include="PathNode.cs" />
         <Compile Include="PathNodeGraph.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
