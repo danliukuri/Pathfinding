@@ -1,10 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AStarPathfinding", "AStarPathfinding\AStarPathfinding.csproj", "{AD5F1C3E-EBBD-4024-AB6C-8E7D19B4788D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD5F1C3E-EBBD-4024-AB6C-8E7D19B4788D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD5F1C3E-EBBD-4024-AB6C-8E7D19B4788D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD5F1C3E-EBBD-4024-AB6C-8E7D19B4788D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD5F1C3E-EBBD-4024-AB6C-8E7D19B4788D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
