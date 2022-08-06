@@ -10,18 +10,39 @@ namespace AStarPathfinding
     /// </typeparam>
     public abstract class PathNodeGraph<T>
     {
+        #region Properties
+        internal IEqualityComparer<PathNode<T>> NodesComparer { get; }
+        #endregion
+        
         #region Fields
+        /// <summary>
+        /// Provides a function that evaluates whether a <paramref name="first"/>
+        /// equal to the <paramref name="second"/>.
+        /// </summary>
+        public delegate bool EqualCallback(T first, T second);
+        
         private readonly Dictionary<T, PathNode<T>> _nodes = new Dictionary<T, PathNode<T>>();
+        private readonly EqualCallback _equalCallback;
         #endregion
 
         #region Methods
+        protected PathNodeGraph(EqualCallback equalCallback)
+        {
+            _equalCallback = equalCallback;
+            NodesComparer = new PathNodeEqualityComparer<T>(equalCallback);
+        }
+        protected PathNodeGraph(IEqualityComparer<T> equalityComparer = default) : this(equalityComparer == default
+            ? (EqualCallback)EqualityComparer<T>.Default.Equals
+            : equalityComparer.Equals) { }
+
         /// <summary>
         /// Evaluates whether a target node has been reached.
         /// </summary>
         /// <param name="node">An evaluated node.</param>
         /// <param name="target">A target node.</param>
         /// <returns>True if target node is reached; otherwise, false.</returns>
-        public abstract bool IsTargetReached(T node, T target);
+        /// <remarks>By default target is reached if it equal to node that evaluates.</remarks>
+        public virtual bool IsTargetReached(T node, T target) => _equalCallback.Invoke(node, target);
         
         /// <summary>
         /// A heuristic function that estimates the cost of the
@@ -34,14 +55,12 @@ namespace AStarPathfinding
         /// </returns>
         public abstract float CostToTarget(T node, T target);
         /// <summary>
-        /// A heuristic function that estimates the cost to moving from a <paramref name="node"/> to the
-        /// <paramref name="connectedNode"/>.
+        /// A heuristic function that estimates the cost to moving from a
+        /// <paramref name="node"/> to the <paramref name="connectedNode"/>.
         /// </summary>
         /// <param name="node">An estimated node which have connected nodes.</param>
         /// <param name="connectedNode">A connected node.</param>
-        /// <returns>
-        /// The weight of the edge from a <paramref name="node"/> to the <paramref name="connectedNode"/>
-        /// </returns>
+        /// <returns>The weight of the edge from a <paramref name="node"/> to the <paramref name="connectedNode"/></returns>
         public abstract float CostToConnectedNode(T node, T connectedNode);
         
         /// <summary>

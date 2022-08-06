@@ -25,6 +25,8 @@ namespace AStarPathfinding
         /// <param name="start">Start of path.</param>
         /// <param name="target">End of path.</param>
         /// <returns>Default value of list if source is empty; otherwise, a reversed list of path nodes.</returns>
+        /// <remarks>By default target is reached if it equal to node that evaluates.</remarks>
+        /// <seealso cref="PathNodeGraph{T}.IsTargetReached"/>
         public List<T> ShortestReversedPathOrDefault(T start, T target)
         {
             var startNode = _pathNodeGraph.WrapInPathNode(start);
@@ -46,7 +48,7 @@ namespace AStarPathfinding
         private PathNode<T> EndOfShortestPathOrDefault(PathNode<T> startNode, T target)
         {
             _pathNodeGraph.ResetNodes();
-            var openSet = new HashSet<PathNode<T>>();
+            var openSet = new HashSet<PathNode<T>>(_pathNodeGraph.NodesComparer);
             var closedSet = new HashSet<T>();
 
             startNode.UpdatePathCharacteristics(default, default, _pathNodeGraph.CostToTarget(startNode.Value, target));
